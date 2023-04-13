@@ -2,7 +2,6 @@
   "name": "blog",
   "version": "1.0.0",
   "description": "zthCn's blog",
-  "main": "index.js",
   "scripts": {
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
@@ -19,6 +18,7 @@
   ],
   "author": "zthCn",
   "dependencies": {
+    "@vue/theme": "^2.2.1",
     "vitepress": "1.0.0-alpha.17"
   },
   "devDependencies": {
