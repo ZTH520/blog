@@ -19,7 +19,7 @@
   "author": "zthCn",
   "dependencies": {
     "@vue/theme": "^2.2.1",
-    "vitepress": "1.0.0-alpha.17"
+    "vitepress": "1.0.0-alpha.49"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.5.1",

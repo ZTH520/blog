@@ -2,5 +2,4 @@
   <div>文章</div>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
