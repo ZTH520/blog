@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress';
-import { navList, sidebarFrontBase } from './sidebar';
+import { navList, sidebarFrontBase, sidebarFrontFramework, sidebarAlgorithm, sidebarBasics } from './sidebar';
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -21,6 +21,9 @@ export default defineConfig({
     nav: navList(),
     sidebar: {
       '/front-base/': sidebarFrontBase(),
+      '/front-framework/': sidebarFrontFramework(),
+      '/basics/': sidebarBasics(),
+      '/algo-data/': sidebarAlgorithm(),
     },
     socialLinks: [{ icon: 'github', link: 'https://github.com/ZTH520' }],
     editLink: {
