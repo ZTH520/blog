@@ -34,5 +34,20 @@ export default defineConfig({
       message: 'Released under the MIT License.',
       copyright: 'Powered By vitepress',
     },
+    outline: {
+      label: '快速导航',
+    },
+    lastUpdatedText: '最近更新',
+    docFooter: {
+      prev: '上一章',
+      next: '下一章',
+    },
+  },
+  markdown: {
+    theme: {
+      light: 'vitesse-light',
+      dark: 'vitesse-dark',
+    },
+    lineNumbers: true,
   },
 });
