@@ -1,1 +1,0 @@
-import{_ as e,o as t,c as a}from"./app.f92afc06.js";const i=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"front-base/js/core.md","lastUpdated":1681486812000}'),r={name:"front-base/js/core.md"};function o(s,c,n,p,d,_){return t(),a("div")}const m=e(r,[["render",o]]);export{i as __pageData,m as default};
