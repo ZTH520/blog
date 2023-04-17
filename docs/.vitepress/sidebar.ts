@@ -55,6 +55,11 @@ export const sidebarFrontBase = () => [
       { text: '包管理', link: '' },
     ],
   },
+  {
+    text: '表现层',
+    collapsed: true,
+    items: [{ text: 'CSS基础', link: '/front-base/html/css' }],
+  },
 ];
 
 export const sidebarFrontFramework = () => [
@@ -62,8 +67,8 @@ export const sidebarFrontFramework = () => [
     text: 'Vue',
     collapsed: true,
     items: [
-      { text: '核心原理与概念', link: '' },
-      { text: 'vue3', link: '' },
+      { text: '核心原理与概念', link: '/front-framework/vue/core' },
+      { text: 'vue3', link: '/front-framework/vue/vue3' },
       { text: '常见问题', link: '' },
     ],
   },
