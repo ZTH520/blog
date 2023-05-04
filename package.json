@@ -18,7 +18,7 @@
   ],
   "author": "zthCn",
   "dependencies": {
-    "vitepress": "1.0.0-alpha.49"
+    "vitepress": "1.0.0-alpha.75"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.5.1",
