@@ -60,6 +60,14 @@ export const sidebarFrontBase = () => [
     collapsed: true,
     items: [{ text: 'CSS基础', link: '/front-base/html/css' }],
   },
+  {
+    text: '其它',
+    collapsed: true,
+    items: [
+      { text: 'git', link: '/front-base/other/git' },
+      { text: 'npm', link: '/front-base/other/npm' },
+    ],
+  },
 ];
 
 export const sidebarFrontFramework = () => [
