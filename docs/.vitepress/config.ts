@@ -38,6 +38,9 @@ export default defineConfig({
       label: '快速导航',
     },
     lastUpdatedText: '最近更新',
+    sidebarMenuLabel: '菜单',
+    returnToTopLabel: '回到顶部',
+    darkModeSwitchLabel: '切换',
     docFooter: {
       prev: '上一章',
       next: '下一章',
