@@ -34,6 +34,7 @@ export const sidebarFrontBase = () => [
       { text: 'JS核心', link: '/front-base/js/core' },
       { text: 'Typescript', link: '/front-base/js/typescript' },
       { text: '手写实现', link: '/front-base/js/handwriting' },
+      { text: '日常积累', link: '/front-base/js/daily' },
     ],
   },
   {
