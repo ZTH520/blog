@@ -14,29 +14,28 @@ const vnode = {
       children: [],
     },
   ],
-};
+}
 
-const render = (vnode, container) => {
-  const el = document.createElement(vnode.tag);
+function render(vnode, container) {
+  const el = document.createElement(vnode.tag)
 
   if (vnode.attrs) {
-    for (const key in vnode.attrs) {
-      el.setAttribute(key, vnode.attrs[key]);
-    }
+    for (const key in vnode.attrs)
+      el.setAttribute(key, vnode.attrs[key])
+
   }
 
   if (vnode.children) {
     vnode.children.forEach((item) => {
-      render(item, el);
-    });
+      render(item, el)
+    })
   }
 
-  container.appendChild(el);
-};
+  container.appendChild(el)
+}
 
-let container = document.createElement('div');
-console.log(render(vnode, container));
-
+const container = document.createElement('div')
+console.log(render(vnode, container))
 ```
 
 ## fetchWithRetry
@@ -44,18 +43,19 @@ console.log(render(vnode, container));
 实现一个函数, fetchWithRetry 会自动重试3次，任意一次成功直接返回
 
 ```js
-const fetchWithRetry = async (url, options, retryCount = 0) => {
-  const { maxRetry = 3, ...remainOption } = options;
+async function fetchWithRetry(url, options, retryCount = 0) {
+  const { maxRetry = 3, ...remainOption } = options
 
   try {
-    return await fetch(url, remainOption);
-  } catch (error) {
-    if (retryCount < maxRetry) {
-      return fetchWithRetry(url, options, retryCount + 1);
-    }
-    throw error;
+    return await fetch(url, remainOption)
   }
-};
+  catch (error) {
+    if (retryCount < maxRetry)
+      return fetchWithRetry(url, options, retryCount + 1)
+
+    throw error
+  }
+}
 ```
 
 ## compose
@@ -63,56 +63,59 @@ const fetchWithRetry = async (url, options, retryCount = 0) => {
 实现compose函数, 类似于koa的中间件洋葱模型
 
 ```js
-let middleware = [];
+const middleware = []
 middleware.push((next) => {
-  console.log(1);
-  next();
-  console.log(1.1);
-});
+  console.log(1)
+  next()
+  console.log(1.1)
+})
 middleware.push((next) => {
-  console.log(2);
-  next();
-  console.log(2.1);
-});
+  console.log(2)
+  next()
+  console.log(2.1)
+})
 middleware.push((next) => {
-  console.log(3);
-  next();
-  console.log(3.1);
-});
+  console.log(3)
+  next()
+  console.log(3.1)
+})
 
-const compose = (middleware) => {
+function compose(middleware) {
   return (next) => {
-    return dispatch(0);
+    return dispatch(0)
 
     function dispatch(i) {
-      const fn = middleware[i];
-      if (!fn) return Promise.resolve();
+      const fn = middleware[i]
+      if (!fn)
+        return Promise.resolve()
 
       try {
-        return Promise.resolve(fn(() => dispatch(i + 1)));
-      } catch (error) {
-        return Promise.reject(error);
+        return Promise.resolve(fn(() => dispatch(i + 1)))
+      }
+      catch (error) {
+        return Promise.reject(error)
       }
     }
-  };
-};
+  }
+}
 
-let fn = compose(middleware);
-fn();
+const fn = compose(middleware)
+fn()
 function compose(middleware) {
-  let middlewareData = {};
+  let middlewareData = {}
 
   async function dispatch(index) {
-    if (index === middleware.length) return;
+    if (index === middleware.length)
+      return
 
-    const { name, fn } = middleware[index];
+    const { name, fn } = middleware[index]
 
     const { data } = await fn({
       middlewareData,
       next: () => {
-        dispatch(++index);
+        dispatch(++index)
       },
-    });
+    })
 
     middlewareData = {
       ...middlewareData,
@@ -120,12 +123,12 @@ function compose(middleware) {
         ...middlewareData[name],
         ...data,
       },
-    };
+    }
   }
 
-  dispatch(0);
+  dispatch(0)
 
-  return middlewareData;
+  return middlewareData
 }
 ```
 
@@ -134,248 +137,256 @@ function compose(middleware) {
 ```js
 class EventEmitter {
   constructor() {
-    this.event = {};
+    this.event = {}
   }
 
   on(type, fn) {
-    if (!this.event[type]) {
-      this.event[type] = [fn];
-    } else {
-      this.event[type].push(fn);
-    }
+    if (!this.event[type])
+      this.event[type] = [fn]
+    else
+      this.event[type].push(fn)
+
   }
 
   off(type, fn) {
-    if (!this.event[type]) return;
-    this.event[type] = this.event[type].filter((item) => item !== fn);
+    if (!this.event[type])
+      return
+    this.event[type] = this.event[type].filter(item => item !== fn)
   }
 
   emit(type, ...args) {
-    if (!this.event[type]) return;
+    if (!this.event[type])
+      return
     this.event[type].forEach((fn) => {
-      fn(...args);
-    });
+      fn(...args)
+    })
   }
 
   once(type, cb) {
     const fn = () => {
-      cb();
-      this.off(type, fn);
-    };
-    this.on(type, fn);
+      cb()
+      this.off(type, fn)
+    }
+    this.on(type, fn)
   }
 }
-
 ```
 
 ## 获取两个对象的差异
 
 ```js
-const getObjDiff = (before, after) => {
-  const result = Array.isArray(after) ? [] : {};
-  const allKeys = [...new Set([...Object.keys(before), ...Object.keys(after)])];
+function getObjDiff(before, after) {
+  const result = Array.isArray(after) ? [] : {}
+  const allKeys = [...new Set([...Object.keys(before), ...Object.keys(after)])]
 
   for (const key of allKeys) {
-    const hasBefore = before.hasOwnProperty(key);
-    const hasAfter = after.hasOwnProperty(key);
-    const beforeVal = before[key];
-    const afterVal = after[key];
+    const hasBefore = Object.prototype.hasOwnProperty.call(before, key)
+    const hasAfter = Object.prototype.hasOwnProperty.call(after, key)
+    const beforeVal = before[key]
+    const afterVal = after[key]
 
     if (typeof beforeVal === 'object' && typeof afterVal === 'object' && beforeVal && afterVal) {
-      const subDiff = getObjDiff(beforeVal, afterVal);
+      const subDiff = getObjDiff(beforeVal, afterVal)
       if (Object.keys(subDiff).length) {
         result[key] = {
           _type: 'change',
           _value: subDiff,
-        };
+        }
       }
-    } else {
-      result[key] =
-        hasBefore && hasAfter
+    }
+    else {
+      result[key]
+        = hasBefore && hasAfter
           ? beforeVal !== afterVal
             ? { _type: 'change', _value: afterVal }
             : undefined
           : hasBefore
-          ? { _type: 'delete', _value: beforeVal }
-          : { _type: 'add', _value: afterVal };
+            ? { _type: 'delete', _value: beforeVal }
+            : { _type: 'add', _value: afterVal }
     }
   }
 
-  return result;
-};
-
+  return result
+}
 ```
 
 ## 实现 lodash get set 方法
 
 ```js
-const _get = (obj, path, defaultVal) => {
+function _get(obj, path, defaultVal) {
   // 统一输入格式 string => array 'a[0].b' => [a, 0, b]
-  const newPath = Array.isArray(path) ? path : path.match(/[^\[\].]+/g);
+  const newPath = Array.isArray(path) ? path : path.match(/[^\[\].]+/g)
   return (
     newPath.reduce((rlt, cur) => {
-      return (rlt || {})[cur];
+      return (rlt || {})[cur]
     }, obj) ?? defaultVal
-  );
-};
+  )
+}
 
-const _set = (obj, path, val) => {
-  const newPath = Array.isArray(path) ? path : path.match(/[^\[\].]+/g);
+function _set(obj, path, val) {
+  const newPath = Array.isArray(path) ? path : path.match(/[^\[\].]+/g)
   newPath.reduce((rlt, cur, index, arr) => {
     if (index === arr.length - 1) {
-      rlt[cur] = val;
-    } else if (cur in rlt) {
-      return rlt[cur];
-    } else {
-      rlt[cur] = /^[0-9]{1,}$/.test(arr[index + 1]) ? [] : {};
-      return rlt[cur];
+      rlt[cur] = val
     }
-  }, obj);
-  return obj;
-};
+    else if (cur in rlt) {
+      return rlt[cur]
+    }
+    else {
+      rlt[cur] = /^[0-9]{1,}$/.test(arr[index + 1]) ? [] : {}
+      return rlt[cur]
+    }
+    return rlt
+  }, obj)
+  return obj
+}
 ```
 
 ## 将列表转为树形结构
 
 ```js
-const listToTree = (list, root = 0, key = 'id', pKey = 'pId') => {
+function listToTree(list, root = 0, key = 'id', pKey = 'pId') {
   // 如果是乱序需要先排序
   // list.sort((a, b) => a[key] - b[key])
-  const parent = {};
-  const result = [];
+  const parent = {}
+  const result = []
 
   for (const item of list) {
     // 这里拿到需要的数据然后做处理
-    const { [key]: id, [pKey]: pId } = item;
-    const copy = { id, pId };
+    const { [key]: id, [pKey]: pId } = item
+    const copy = { id, pId }
 
     if (parent[pId]) {
       // (parent[pId].children ||= []).push(copy);
-      (parent[pId].children || (parent[pId].children = [])).push(copy);
+      (parent[pId].children || (parent[pId].children = [])).push(copy)
     }
-    parent[id] = copy;
+    parent[id] = copy
 
-    if (pId === root) result.push(copy);
+    if (pId === root)
+      result.push(copy)
   }
 
-  return result;
-};
+  return result
+}
 ```
 
 ## call、apply、bind
 
 ```js
 Function.prototype.cCall = function (context, ...args) {
-  if (typeof this !== 'function') throw new TypeError('error');
+  if (typeof this !== 'function')
+    throw new TypeError('error')
 
-  context = context || window;
-  let fn = Symbol('fn');
-  context[fn] = this;
-  const res = context[fn](...args);
-  delete context[fn];
+  context = context || window
+  const fn = Symbol('fn')
+  context[fn] = this
+  const res = context[fn](...args)
+  delete context[fn]
 
-  return res;
-};
+  return res
+}
 
 Function.prototype.cApply = function (context, args) {
-  if (typeof this !== 'function') throw new TypeError('error');
+  if (typeof this !== 'function')
+    throw new TypeError('error')
 
-  context = context || window;
-  let fn = Symbol('fn');
-  context[fn] = this;
-  const res = context[fn](...args);
-  delete context[fn];
+  context = context || window
+  const fn = Symbol('fn')
+  context[fn] = this
+  const res = context[fn](...args)
+  delete context[fn]
 
-  return res;
-};
+  return res
+}
 
 Function.prototype.cBind = function (context, ...args) {
-  let fn = this;
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const Fn = this
 
   return function newFn() {
-    if (this instanceof newFn) {
-      return new fn(...args, ...arguments);
-    }
+    // eslint-disable-next-line @typescript-eslint/no-invalid-this
+    if (this instanceof newFn)
+      return new Fn(...args, ...rest)
 
-    return fn.call(context, ...args, ...arguments);
-  };
-};
+    return Fn.call(context, ...args, ...rest)
+  }
+}
 ```
 
 ## 实现并发请求限制并发数
 
 ```js
-const delay = (interval) => {
-  return new Promise((res, rej) => {
+function delay(interval) {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (Math.random() > 0.5) {
-        res(interval);
-      } else {
-        rej(null);
-      }
-    }, interval);
-  });
-};
+      if (Math.random() > 0.5)
+        resolve(interval)
+      else
+        reject(null)
 
-let tasks = [
-  () => {
-    console.log(1);
-    return delay(1000);
-  },
-  () => {
-    console.log(2);
-    return delay(1050);
-  },
-  () => {
-    console.log(3);
-    return delay(2000);
-  },
-  () => {
-    console.log(4);
-    return delay(2050);
-  },
-  () => {
-    console.log(5);
-    return delay(3000);
-  },
-  () => {
-    console.log(6);
-    return delay(4000);
-  },
-];
+    }, interval)
+  })
+}
 
-const sendRequest = (tasks, max, callBack) => {
-  let index = 0;
-  let together = new Array(max).fill(null);
-  const result = [];
+const tasks = [
+  () => {
+    console.log(1)
+    return delay(1000)
+  },
+  () => {
+    console.log(2)
+    return delay(1050)
+  },
+  () => {
+    console.log(3)
+    return delay(2000)
+  },
+  () => {
+    console.log(4)
+    return delay(2050)
+  },
+  () => {
+    console.log(5)
+    return delay(3000)
+  },
+  () => {
+    console.log(6)
+    return delay(4000)
+  },
+]
+
+function sendRequest(tasks, max, callBack) {
+  let index = 0
+  let together = Array(max).fill(null)
+  const result = []
 
   together = together.map(() => {
     return new Promise((resolve) => {
       const run = () => {
         if (index >= tasks.length) {
-          resolve();
-          return;
+          resolve()
+          return
         }
-        let cur = index;
-        let task = tasks[index++];
+        const cur = index
+        const task = tasks[index++]
         task()
           .then((res) => {
-            result[cur] = res;
-            run();
+            result[cur] = res
+            run()
           })
           .catch((err) => {
-            result[cur] = err;
-            run();
+            result[cur] = err
+            run()
             // reject(err);
-          });
-      };
-      run();
-    });
-  });
-  Promise.all(together).then(() => callBack(result));
-};
+          })
+      }
+      run()
+    })
+  })
+  Promise.all(together).then(() => callBack(result))
+}
 
 sendRequest(tasks, 2, (res) => {
-  console.log(res);
-});
+  console.log(res)
+})
 ```

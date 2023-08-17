@@ -73,28 +73,28 @@ JS 按顺序执行执行栈中的方法。每次执行一个方法时，会为�
 
 ```js
 setTimeout(() => {
-  console.log(5);
+  console.log(5)
   new Promise((resolve) => {
-    console.log(6);
-    resolve();
+    console.log(6)
+    resolve()
   }).then(() => {
-    console.log(8);
+    console.log(8)
   })
-  console.log(7);
-}, 0);
+  console.log(7)
+}, 0)
 function promise2() {
   return new Promise((resolve) => {
-    console.log(2);
-    resolve();
+    console.log(2)
+    resolve()
   })
 }
 async function async1() {
-  console.log(1);
-  await promise2();
-  console.log(4);
+  console.log(1)
+  await promise2()
+  console.log(4)
 }
-async1();
-console.log(3);
+async1()
+console.log(3)
 ```
 ## 垃圾回收
 
