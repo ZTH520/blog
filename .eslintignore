@@ -1,10 +1,4 @@
 dist
 cache
 lib
-es
-esm
 node_modules
-static
-static/
-!.prettierrc.js
-package.json

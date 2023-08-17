@@ -1,5 +1,5 @@
-import { defineConfig } from 'vitepress';
-import { navList, sidebarFrontBase, sidebarFrontFramework, sidebarAlgorithm, sidebarBasics } from './sidebar';
+import { defineConfig } from 'vitepress'
+import { navList, sidebarAlgorithm, sidebarBasics, sidebarFrontBase, sidebarFrontFramework } from './sidebar'
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -53,4 +53,4 @@ export default defineConfig({
     },
     lineNumbers: true,
   },
-});
+})

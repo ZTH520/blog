@@ -1,61 +1,54 @@
 {
   "name": "blog",
+  "type": "module",
   "version": "1.0.0",
+  "packageManager": "pnpm@8.6.5",
   "description": "zthCn's blog",
-  "scripts": {
-    "dev": "vitepress dev docs",
-    "build": "vitepress build docs",
-    "serve": "vitepress serve docs",
-    "clean": "rm -rf .vitepress/dist",
-    "lint": "eslint --ext .vue,.js,.jsx,.ts,.tsx ./ --max-warnings 0",
-    "preinstall": "npx only-allow pnpm",
-    "prepare": "husky install"
-  },
+  "author": "zthCn",
   "keywords": [
     "vitepress",
     "vue3",
     "typescript"
   ],
-  "author": "zthCn",
-  "dependencies": {
-    "vitepress": "1.0.0-alpha.75"
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "serve": "vitepress serve docs",
+    "clean": "rm -rf .vitepress/dist",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "simple-git-hooks",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "commit:verify": "esno scripts/verify-commit.ts"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.5.1",
-    "@commitlint/config-conventional": "^17.4.4",
-    "@typescript-eslint/eslint-plugin": "^5.58.0",
-    "@typescript-eslint/parser": "^5.58.0",
-    "commitizen": "^4.3.0",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.38.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.10.0",
-    "eslint-plugin-vue-scoped-css": "^2.4.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.1",
-    "prettier": "^2.8.7",
-    "typescript": "^5.0.4"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx,vue,ts,tsx}": [
-      "prettier --write",
-      "npm run lint --fix",
-      "git add ."
-    ]
+    "@antfu/eslint-config": "^0.40.2",
+    "@types/node": "^20.5.0",
+    "conventional-changelog-cli": "^3.0.0",
+    "eslint": "^8.47.0",
+    "esno": "^0.17.0",
+    "lint-staged": "^14.0.0",
+    "picocolors": "^1.0.0",
+    "simple-git-hooks": "^2.9.0",
+    "typescript": "^5.1.6",
+    "vitepress": "1.0.0-rc.4"
   },
   "pnpm": {
     "peerDependencyRules": {
       "ignoreMissing": [
-        "@algolia/client-search"
+        "@algolia/client-search",
+        "search-insights"
       ]
     }
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged",
+    "commit-msg": "pnpm run commit:verify"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue,ts,tsx}": [
+      "eslint --fix"
+    ]
   }
 }

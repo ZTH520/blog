@@ -1,3 +1,18 @@
 {
-  "cSpell.words": ["vitepress", "zthCn", "commitizen"]
+  "cSpell.words": ["vitepress", "zthCn"],
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.organizeImports": false
+  },
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "yaml"
+  ]
 }
