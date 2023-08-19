@@ -11,7 +11,8 @@
       "files": ["docs/front-base/js/**"],
       "rules": {
         "no-extend-native": "off",
-        "prefer-promise-reject-errors": "off"
+        "prefer-promise-reject-errors": "off",
+        "no-multi-spaces": "off"
       }
     }
   ],
