@@ -99,7 +99,7 @@ function error(msg: string): never {
 }
 ```
 ## 联合类型
-联合类型用<span style="color: #f5222d"> | </span>分隔，表示取值可以为多种类型中的一种
+联合类型用<font color="#f5222d"> | </font>分隔，表示取值可以为多种类型中的一种
 ```ts
 const x: number | string
 ```
@@ -114,7 +114,7 @@ function getCount(count: TCount): number {
 }
 ```
 ## 交叉类型
-交叉类型就是跟联合类型相反，用<span style="color: #f5222d"> & </span>操作符表示，交叉类型就是两个类型必须存在
+交叉类型就是跟联合类型相反，用<font color="#f5222d"> & </font>操作符表示，交叉类型就是两个类型必须存在
 ```ts
 interface IOption {
   label: string
@@ -128,6 +128,78 @@ const item: IOption & IState = {
   label: 'ts',
   value: 'ts',
 }
+```
+## 类型断言
+某些情况下我们可能比 <code>typescript</code> 更加清楚的知道某个变量的类型，所以我们可能希望手动指定一个值的类型
+
+类型断言有两种方式
+
+```ts
+const str: any = 'ts'
+// 方式一
+const strLen: number = (<string>str).length
+// 方式二
+const len: number = (str as string).length
+```
+## 泛型
+### 泛型工具类型
+* typeof
+
+类型推导
+```ts
+const info = {
+  lang: 'ts',
+  type: 'md'
+}
+
+type TInfo = typeof info
+function getInfo(info: TInfo): string {
+  return info.lang
+}
+```
+* keyof
+
+获取一个对象接口中的所有 key 值
+```ts
+interface TInfo {
+  lang: 'ts' | 'js'
+  type: string
+}
+type TInfoKey = keyof TInfo // "lang" | "type"
+```
+* in
+
+用来遍历枚举类型
+```ts
+type TKey = 'lang' | 'type' | 'author'
+type TInfo = {
+  [K in TKey]: K extends 'lang' ? 'ts' | 'js' : string
+}
+```
+* infer
+
+在条件类型语句中，可以用 <code>infer</code> 声明一个类型变量并且对它进行使用。
+
+1. <code>infer</code> 只能在条件类型的 <code>extends</code> 子句中使用
+2. <code>infer</code> 得到的类型只能在 <code>true</code> 语句中使用
+```ts
+type InferArray<T> = T extends (infer U)[] ? U : never
+type InferFirst<T extends unknown[]> = T extends [infer F, ...infer _] ? P : never
+type ReturnType<T> = T extends (...arg: any[]) => infer R ? R : any
+type InferString<T extends string> = T extends `${infer F}${infer _}` ? F : []
+type StringToUnion<T extends string, U = never> = T extends ''
+  ? U
+  : T extends `${infer L}${infer R}`
+    ? StringToUnion<R, U | L>
+    : U
+```
+* [] 索引访问操作符
+```ts
+interface TInfo {
+  lang: 'ts' | 'js'
+  type: string
+}
+type TLang = TInfo['lang'] // 'ts' | 'js'
 ```
 ## tsconfig.json
 ```json
