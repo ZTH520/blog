@@ -48,8 +48,8 @@ export default defineConfig({
   },
   markdown: {
     theme: {
-      light: 'vitesse-light',
-      dark: 'vitesse-dark',
+      light: 'solarized-light',
+      dark: 'solarized-dark',
     },
     lineNumbers: true,
   },

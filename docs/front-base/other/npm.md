@@ -15,8 +15,7 @@ npm config get registry
 ```
 
 ```shell
-npm config set registry=http://registry.npmjs.org
-npm config set registry=http://registry.npm.taobao.org/
+npm config set registry=https://registry.npmjs.org
 ```
 
 ## npm view
