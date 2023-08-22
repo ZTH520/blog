@@ -36,6 +36,7 @@ export default defineConfig({
     },
     outline: {
       label: '快速导航',
+      level: 'deep',
     },
     lastUpdatedText: '最近更新',
     sidebarMenuLabel: '菜单',
