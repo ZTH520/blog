@@ -1,4 +1,17 @@
 # 类型体操
+模板
+```md
+### TypeName
+描述
+```ts
+/**
+ * 1.思路
+*/
+type TypeName<T> = T
+
+type X = TypeName<[]>
+```
+
 ## object 工具类型
 ### Merge
 合并两个已知类型，对于同名的key，合并类型，最后返回一个新类型
@@ -106,6 +119,50 @@ type X = TupleToObject<['ts']>
 type TupleToUnion<T extends unknown[]> = T[number]
 
 type X = TupleToObject<['ts', 123]>
+```
+### IsTuple
+判断一个类型是否是元祖
+```ts
+/**
+ * 1.元祖与数组类型的区别，数组类型的 length 返回 number
+ * 元祖类型的 length 返回具体的数字
+*/
+type IsTuple<T> = T extends readonly any[]
+  ? number extends T['length']
+    ? false : true
+  : false
+
+type X = IsTuple<['ts', 123]>
+```
+### LastIndexOf
+找到元素在元组中的位置，找不到返回-1
+```ts
+/**
+ * 1.利用扩展运算符拿到最后一个元素，利用 infer 关键字与 U 作比较
+ * 2.当两个类型一样或者具有父子关系时，通过 extends 可以得到 true
+ * 3.最后利用递归直到找到目标元素
+*/
+type LastIndexOf<T extends any[], U> = T extends [...infer F, infer L]
+  ? U extends L ? F['length']
+    : LastIndexOf<F, U>
+  : -1
+
+type X = LastIndexOf<['ts', 123], 'ts'>
+```
+### Includes
+判断元素是否在元组中
+```ts
+/**
+ * 1.与 LastIndexOf 思路大致相同
+ * 2. infer 关键字的巧妙使用
+*/
+type Includes<T extends any[], U> = T extends [infer F, ...infer rest]
+  ? F extends U
+    ? true
+    : Includes<rest, U>
+  : false
+
+type X = Includes<['ts', 124], 'ts'>
 ```
 ## string 工具类型
 ### StartsWith
