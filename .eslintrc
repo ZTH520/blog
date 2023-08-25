@@ -8,7 +8,7 @@
         }
     },
     {
-      "files": ["docs/front-base/js/**"],
+      "files": ["docs/front-base/**/**"],
       "rules": {
         "no-extend-native": "off",
         "prefer-promise-reject-errors": "off",

@@ -35,10 +35,16 @@ export function sidebarFrontBase() {
       collapsed: true,
       items: [
         { text: 'JS核心', link: '/front-base/js/core' },
-        { text: 'Typescript', link: '/front-base/js/typescript' },
-        { text: '类型体操', link: '/front-base/js/gymnastics' },
         { text: '手写实现', link: '/front-base/js/handwriting' },
         { text: '日常积累', link: '/front-base/js/daily' },
+      ],
+    },
+    {
+      text: 'Typescript',
+      collapsed: true,
+      items: [
+        { text: 'ts基础', link: '/front-base/ts/typescript' },
+        { text: '类型体操', link: '/front-base/ts/gymnastics' },
       ],
     },
     {
