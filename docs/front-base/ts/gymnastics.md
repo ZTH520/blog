@@ -164,6 +164,94 @@ type Includes<T extends any[], U> = T extends [infer F, ...infer rest]
 
 type X = Includes<['ts', 124], 'ts'>
 ```
+### Reverse
+将数组类型中的元素进行翻转
+```ts
+type Reverse<T extends any[]> = T extends [infer F, ...infer R]
+  ? [...Reverse<R>, F]
+  : T
+
+type X = Reverse<['ts', 123]>
+```
+### Filter
+从数组类型中挑选指定的类型并返回一个由挑选类型组成的新数组
+```ts
+type Filter<T extends any[], U> = T extends [infer F, ...infer R]
+  ? F extends U
+    ? [...Filter<R, U>, F]
+    : Filter<R, U>
+  : T
+
+type X = Filter<['ts', 123], 'ts'>
+```
+### Flatten
+扁平化数组
+```ts
+type Flatten<T extends any[]> = T extends []
+  ? []
+  : T extends [infer F, ...infer R]
+    ? F extends any[]
+      ? [...Flatten<F>, ...Flatten<R>]
+      : [F, ...Flatten<R>]
+    : [T]
+
+type X = Flatten<['ts', [123, 'js']]>
+```
+### Fill
+逐一替换指定位置或者区间的元素
+```ts
+type Result = Fill<['ts', 123], 1> // [1, 1]
+type Result = Fill<['ts', 123], 1, 1> // [1, 123]
+type Result = Fill<['ts', 123, 'js'], 1, 1, 3> // [1, 1, 'js']
+```
+> 在TypeScript中跟位置相关的有 number 和 length,前者是用来获取元素的,后者得到的是数字
+```ts
+/**
+ * 1.在递归的过程中 T['length'] 一直在减少
+ * 2.需要声明一个类型变量用于记录当前已经处理了几个元素，这里使用 C 来表示 count 计数
+ * 3.递归出口,当 C['length'] 与 E 相等时，后续的元素都不需要再进行处理了
+ * 4.遇到 S 时我们能够有一个变量 M 来标记开始，然后在遇到 E 前，都强制取U
+*/
+// 版本一
+type Fill<T extends any[], U> = T extends [T[0], ...infer L]
+  ? [U, ...Fill<L, U>]
+  : T
+// 版本二
+type Fill<T extends any[], U, S extends number = 0> =
+  T extends [...infer L, infer R]
+    ? T['length'] extends S
+      ? [...Fill<L, U, S>, U]
+      : [...Fill<L, U, S>, S extends 0 ? U : R]
+    : T
+
+type Common<T extends any[], U, S extends number = 0> =
+  T extends [...infer L, infer R]
+    ? T['length'] extends S
+      ? [...Common<L, U, S>, U]
+      : [...Common<L, U, S>, S extends 0 ? U : R]
+    : T
+// 版本三
+type Fill<
+  T extends any[],
+  U,
+  S extends number = 0,
+  E extends number = T['length'],
+  C extends any[] = [U],
+  M extends boolean = C['length'] extends S ? true : false,
+> =
+  C['length'] extends E
+    ? T
+    : T extends [infer L, ...infer R]
+      ? S extends 0
+        ? Common<T, U, S>
+        : M extends true
+          ? [U, ...Fill<R, U, S, E, [...C, any], M>]
+          : [L, ...Fill<R, U, S, E, [...C, any]>]
+      : T
+
+type X = Fill<['ts', 123, 'js'], 1, 3>
+```
+
 ## string 工具类型
 ### StartsWith
 判断字符串是否以子串为起始
