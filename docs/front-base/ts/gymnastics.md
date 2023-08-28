@@ -56,6 +56,19 @@ type Flip<T extends Record<string | number | symbol, any>> = {
 
 type X = Flip<{ x: string }>
 ```
+### ReadonlyDeep
+对象类型深度 readonly
+```ts
+/**
+ * 1.递归出口当前的 T 不是一个对象类型时,即 key 不存在
+*/
+type ReadonlyDeep<T> = keyof T extends never
+  ? T
+  : { readonly [K in keyof T]: ReadonlyDeep<T[K]> }
+
+type X = ReadonlyDeep<{ a: string; b: { c: number } }>
+```
+
 ## array 工具类型
 ### Push
 在元组后面插入一位
@@ -250,6 +263,29 @@ type Fill<
       : T
 
 type X = Fill<['ts', 123, 'js'], 1, 3>
+```
+### FlattenDepth
+数组拍平指定深度
+```ts
+/**
+ * 1.指定深度相当于递归层数,每次递归就往 U 添加一个元素
+ * 2.最后 U['length'] 就代表递归深度
+*/
+type FlattenDepth<
+  T extends unknown[],
+  D extends number = 1,
+  C extends any[] = [],
+> = C['length'] extends D
+  ? T
+  : T extends []
+    ? []
+    : T extends [infer F, ...infer R]
+      ? F extends any[]
+        ? [...FlattenDepth<F, D, [...C, 1]>, ...FlattenDepth<R, D, C>]
+        : [F, ...FlattenDepth<R, D, C>]
+      : [T]
+
+type X = FlattenDepth<['ts', [123, ['js']]], 2>
 ```
 
 ## string 工具类型
