@@ -7,18 +7,19 @@ export function navList() {
     },
     {
       text: '学习',
-      activeMatch: '^/(front-base|front-framework|algo-data|basics)/',
+      activeMatch: '^/(front-base|front-framework|algo-data|basics|interview)/',
       items: [
         { text: '前端基础', link: '/front-base/' },
         { text: '前端框架', link: '/front-framework/' },
         { text: '数据结构与算法', link: '/algo-data/' },
         { text: '基础知识', link: '/basics/' },
+        { text: '八股文收集', link: '/interview/' },
       ],
     },
     {
       text: '工作',
-      activeMatch: '',
-      link: '',
+      activeMatch: '/work/',
+      link: '/work/wdg/',
     },
     {
       text: '生活',
@@ -139,6 +140,14 @@ export function sidebarAlgorithm() {
       text: '算法题搜集',
       collapsed: true,
     },
+    {
+      text: '工作积累',
+      collapsed: true,
+      items: [
+        { text: 'string', link: '/algo-data/work/string' },
+        { text: 'array', link: '/algo-data/work/array' },
+      ],
+    },
   ]
 }
 
@@ -176,6 +185,49 @@ export function sidebarBasics() {
       items: [
         { text: '设计模式', link: '' },
         { text: '函数式编程', link: '' },
+      ],
+    },
+  ]
+}
+
+export function sidebarInterview() {
+  return [
+    {
+      text: 'Vue相关',
+      collapsed: true,
+      items: [
+        { text: 'vue', link: '/interview/vue/vue' },
+      ],
+    },
+    {
+      text: '业务相关',
+      collapsed: true,
+      items: [
+        { text: '各种场景', link: '/interview/business/scene' },
+      ],
+    },
+    {
+      text: '算法相关',
+      collapsed: true,
+      items: [],
+    },
+  ]
+}
+
+export function sidebarWork() {
+  return [
+    {
+      text: 'weidian',
+      collapsed: true,
+      items: [
+        { text: '2024', link: '/work/wdg/2024' },
+      ],
+    },
+    {
+      text: '积累记录',
+      collapsed: true,
+      items: [
+        { text: '命名', link: '/work/record/name' },
       ],
     },
   ]

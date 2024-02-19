@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import { navList, sidebarAlgorithm, sidebarBasics, sidebarFrontBase, sidebarFrontFramework } from './sidebar'
+import { navList, sidebarAlgorithm, sidebarBasics, sidebarFrontBase, sidebarFrontFramework, sidebarInterview, sidebarWork } from './sidebar'
 
 export default defineConfig({
   lang: 'zh-CN',
@@ -24,6 +24,8 @@ export default defineConfig({
       '/front-framework/': sidebarFrontFramework(),
       '/basics/': sidebarBasics(),
       '/algo-data/': sidebarAlgorithm(),
+      '/interview/': sidebarInterview(),
+      '/work/': sidebarWork(),
     },
     socialLinks: [{ icon: 'github', link: 'https://github.com/ZTH520' }],
     editLink: {
@@ -53,5 +55,13 @@ export default defineConfig({
       dark: 'solarized-dark',
     },
     lineNumbers: true,
+    image: {
+      lazyLoading: true,
+    },
+  },
+  vite: {
+    server: {
+      open: true,
+    },
   },
 })
