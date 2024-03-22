@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
     "target": "esnext",
+    "jsx": "preserve",
+    "lib": ["esnext", "dom"],
+    "baseUrl": "./",
     "module": "esnext",
     "moduleResolution": "node",
-    "jsx": "preserve",
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
-    "noEmit": true,
-    "baseUrl": "./",
     "paths": {
       "@/*": ["docs/*"]
-    }
+    },
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "sourceMap": true,
+    "esModuleInterop": true
   },
   "include": ["**/*.ts", "docs/**/*.d.ts", "docs/**/*.ts", "docs/**/*.tsx", "docs/**/*.vue"],
   "compileOnSave": false

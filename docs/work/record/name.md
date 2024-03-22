@@ -4,7 +4,7 @@
 命名要偏向功能，而非执行过程，可以使用 前缀词 + [名词] + [动词]
 
 | 说明  |  前缀词  |  举例 |
-| :-- | :--:  | :-- | 
+| :-- | :--:  | :-- |
 | 是否符合状态  | is  | isModalOpen |
 | 能否执行  | can | canUserOperate |
 | 是否包含  | has/include/contains | containsUserId |

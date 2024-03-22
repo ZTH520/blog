@@ -18,14 +18,16 @@
 ### 层序遍历
 ::: code-group
 ```js [binary_tree_bfs.js]
-const levelOrder = (root) => {
-  const res = [];
+function levelOrder(root) {
+  const res = []
   const queue = [root]
-  while(queue.length) {
+  while (queue.length) {
     const node = queue.shift()
     res.push(node.val)
-    if (node.left) queue.push(node.left)
-    if (node.right) queue.push(node.right)
+    if (node.left)
+      queue.push(node.left)
+    if (node.right)
+      queue.push(node.right)
   }
   return res
 }
@@ -33,24 +35,26 @@ const levelOrder = (root) => {
 ```ts [binary_tree_bfs.ts]
 /* 二叉树节点类 */
 class TreeNode {
-    val: number;
-    left: TreeNode | null;
-    right: TreeNode | null;
+  val: number
+  left: TreeNode | null
+  right: TreeNode | null
 
-    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
-        this.val = val === undefined ? 0 : val; // 节点值
-        this.left = left === undefined ? null : left; // 左子节点引用
-        this.right = right === undefined ? null : right; // 右子节点引用
-    }
+  constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+    this.val = val === undefined ? 0 : val // 节点值
+    this.left = left === undefined ? null : left // 左子节点引用
+    this.right = right === undefined ? null : right // 右子节点引用
+  }
 }
-const levelOrder = (root: TreeNode | null): number[] => {
+function levelOrder(root: TreeNode | null): number[] {
   const res: number[] = []
   const queue = [root]
-  while(queue.length) {
+  while (queue.length) {
     const node = queue.shift()
     res.push(node.val)
-    if (node.left) queue.push(node.left)
-    if (node.right) queue.push(node.right)
+    if (node.left)
+      queue.push(node.left)
+    if (node.right)
+      queue.push(node.right)
   }
   return res
 }

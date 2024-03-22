@@ -20,7 +20,7 @@ type X = TypeName<[]>
  * 1.in 遍历 T 或者 U 类型 keyof T | keyof U 也可以写成 keyof (T & U)
  * 2.extends 关键字构建条件类型
  * 3.判断 K 子类型是不是在 T 或者 U 中，如果是生成联合类型
-*/
+ */
 type Merge<T extends Record<string, any>, U extends Record<string, any>> = {
   [K in keyof T | keyof U]: K extends keyof U
     ? K extends keyof T
@@ -30,7 +30,7 @@ type Merge<T extends Record<string, any>, U extends Record<string, any>> = {
       ? T[K] : never
 }
 
-type X = Merge<{ a: string; c: string }, { a: number; b: number }>
+type X = Merge<{ a: string, c: string }, { a: number, b: number }>
 ```
 ### Diff
 找出两个对象类型的差异，返回一个新的类型
@@ -39,12 +39,12 @@ type X = Merge<{ a: string; c: string }, { a: number; b: number }>
  * 1.通过 keyof (T | U) 可以获取类型的公共部分
  * 2.in 遍历所有 keyof (T & U) 枚举类型
  * 3.通过 Exclude 排除公共类型，as 断言为新的类型 Exclude
-*/
+ */
 type Diff<T extends object, U extends object> = {
   [K in keyof (T & U) as Exclude<K, keyof (T | U)>]: (T & U)[K]
 }
 
-type X = Diff<{ a: string; c: string }, { a: number; b: number }>
+type X = Diff<{ a: string, c: string }, { a: number, b: number }>
 ```
 ### Flip
 交换对象类型的 key 和 value
@@ -61,12 +61,12 @@ type X = Flip<{ x: string }>
 ```ts
 /**
  * 1.递归出口当前的 T 不是一个对象类型时,即 key 不存在
-*/
+ */
 type ReadonlyDeep<T> = keyof T extends never
   ? T
   : { readonly [K in keyof T]: ReadonlyDeep<T[K]> }
 
-type X = ReadonlyDeep<{ a: string; b: { c: number } }>
+type X = ReadonlyDeep<{ a: string, b: { c: number } }>
 ```
 
 ## array 工具类型
@@ -106,7 +106,7 @@ type X = Last<['ts', 123]>
 /**
  * 1. 首先判断 T U 是不是元祖类型，如果是可以直接用扩展运算符
  * 2. U[number] 可以获取元祖所有集合 key
-*/
+ */
 type Concat<T, U> = T extends unknown[]
   ? U extends unknown[]
     ? [...T, ...U]
@@ -139,7 +139,7 @@ type X = TupleToObject<['ts', 123]>
 /**
  * 1.元祖与数组类型的区别，数组类型的 length 返回 number
  * 元祖类型的 length 返回具体的数字
-*/
+ */
 type IsTuple<T> = T extends readonly any[]
   ? number extends T['length']
     ? false : true
@@ -154,7 +154,7 @@ type X = IsTuple<['ts', 123]>
  * 1.利用扩展运算符拿到最后一个元素，利用 infer 关键字与 U 作比较
  * 2.当两个类型一样或者具有父子关系时，通过 extends 可以得到 true
  * 3.最后利用递归直到找到目标元素
-*/
+ */
 type LastIndexOf<T extends any[], U> = T extends [...infer F, infer L]
   ? U extends L ? F['length']
     : LastIndexOf<F, U>
@@ -168,7 +168,7 @@ type X = LastIndexOf<['ts', 123], 'ts'>
 /**
  * 1.与 LastIndexOf 思路大致相同
  * 2. infer 关键字的巧妙使用
-*/
+ */
 type Includes<T extends any[], U> = T extends [infer F, ...infer rest]
   ? F extends U
     ? true
@@ -224,7 +224,7 @@ type Result = Fill<['ts', 123, 'js'], 1, 1, 3> // [1, 1, 'js']
  * 2.需要声明一个类型变量用于记录当前已经处理了几个元素，这里使用 C 来表示 count 计数
  * 3.递归出口,当 C['length'] 与 E 相等时，后续的元素都不需要再进行处理了
  * 4.遇到 S 时我们能够有一个变量 M 来标记开始，然后在遇到 E 前，都强制取U
-*/
+ */
 // 版本一
 type Fill<T extends any[], U> = T extends [T[0], ...infer L]
   ? [U, ...Fill<L, U>]
@@ -270,7 +270,7 @@ type X = Fill<['ts', 123, 'js'], 1, 3>
 /**
  * 1.指定深度相当于递归层数,每次递归就往 U 添加一个元素
  * 2.最后 U['length'] 就代表递归深度
-*/
+ */
 type FlattenDepth<
   T extends unknown[],
   D extends number = 1,
@@ -310,7 +310,7 @@ type X = EndsWith<'typescript', 'script'>
 /**
  * 1.空格有多种形式，构建一个辅助类型 Space
  * 2.空格数量可能有多个，需要递归的去掉
-*/
+ */
 type Space = ' ' | '\n' | '\t'
 type TrimLeft<T extends string> = T extends `${Space}${infer R}` ? TrimLeft<R> : T
 

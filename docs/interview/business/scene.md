@@ -8,4 +8,3 @@
     - **LocalStorage/SessionStorage:** 当一个标签页对 LocalStorage 或 SessionStorage 进行更新时，其他标签页可以通过监听 `storage` 事件来获取更新。
     - **IndexedDB:** IndexedDB是运行在浏览器上的非关系型数据库，可以用来存储大量数据。通过IndexedDB，不同的标签页可以共享数据，并通过监听数据库的变化来实现通信。
     - **轮询(Polling):** 轮询是一种服务器和客户端通信的技术，客户端定期向服务器发送请求并接收响应。虽然这种方法效率较低，但在没有WebSocket的情况下，它可以作为一种替代方案。
-

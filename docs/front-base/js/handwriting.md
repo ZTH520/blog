@@ -22,7 +22,6 @@ function render(vnode, container) {
   if (vnode.attrs) {
     for (const key in vnode.attrs)
       el.setAttribute(key, vnode.attrs[key])
-
   }
 
   if (vnode.children) {
@@ -145,7 +144,6 @@ class EventEmitter {
       this.event[type] = [fn]
     else
       this.event[type].push(fn)
-
   }
 
   off(type, fn) {
@@ -300,11 +298,9 @@ Function.prototype.cApply = function (context, args) {
 }
 
 Function.prototype.cBind = function (context, ...args) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const Fn = this
 
   return function newFn() {
-    // eslint-disable-next-line @typescript-eslint/no-invalid-this
     if (this instanceof newFn)
       return new Fn(...args, ...rest)
 
@@ -323,7 +319,6 @@ function delay(interval) {
         resolve(interval)
       else
         reject(null)
-
     }, interval)
   })
 }
