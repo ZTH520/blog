@@ -29,9 +29,32 @@ const list = ref<IListItem[]>([
     ],
   },
   {
-    type: '逻辑',
+    type: '逻辑沟通',
     books: [
       { title: '学会提问', checked: false },
+      { title: '所谓情商高,就是会说话', checked: true },
+    ],
+  },
+  {
+    type: '小说',
+    books: [
+      { title: '平凡的世界', checked: false },
+      { title: '杀死一只知更鸟', checked: false },
+      { title: '月亮与六便士', checked: false },
+    ],
+  },
+  {
+    type: '诗词',
+    books: [
+      { title: '唐诗鉴赏辞典', checked: false },
+      { title: '唐诗三百首全解', checked: false },
+      { title: '苏东坡传', checked: false },
+    ],
+  },
+  {
+    type: '诗集',
+    books: [
+      { title: '月亮落在左手上', checked: false },
     ],
   },
 ])

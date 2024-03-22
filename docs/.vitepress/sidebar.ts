@@ -113,7 +113,7 @@ export function sidebarAlgorithm() {
       items: [
         { text: '数据结构', link: '' },
         { text: '链表', link: '' },
-        { text: '树', link: '' },
+        { text: '树', link: '/algo-data/structure/tree' },
       ],
     },
     {
